@@ -1,0 +1,79 @@
+rl -s learning on
+
+sp {propose*initialize-left-right
+   (state <s> ^superstate nil
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-left-right)
+}
+ 
+sp {apply*initialize-left-right
+   (state <s> ^operator <op>)
+   (<op> ^name initialize-left-right)
+-->
+   (<s> ^name left-right
+        ^direction <d1> <d2>
+        ^location start)
+   (<d1> ^name left ^reward 1)
+   (<d2> ^name right ^reward -1)
+}
+
+sp {left-right*propose*move
+   (state <s> ^name left-right
+              ^direction <d>
+              ^location start)
+   (<d> ^name <dir>)
+-->
+   (<s> ^operator <op> +)
+   (<op> ^name move
+         ^dir <dir>)
+}
+ 
+ 
+sp {apply*move
+   (state <s> ^operator <op>
+              ^location start)
+   (<op> ^name move
+         ^dir <dir>)
+-->
+   (<s> ^location start - <dir>)
+   (write (crlf) |Moved: | <dir>)
+}
+ 
+ 
+sp {elaborate*done
+   (state <s> ^name left-right
+              ^location {<> start})
+-->
+   (halt)
+}
+
+sp {left-right*rl*left
+   (state <s> ^name left-right
+              ^operator <op> +)
+   (<op> ^name move
+         ^dir left)
+-->
+   (<s> ^operator <op> = 0)
+}
+ 
+sp {left-right*rl*right
+   (state <s> ^name left-right
+              ^operator <op> +)
+   (<op> ^name move
+         ^dir right)
+-->
+   (<s> ^operator <op> = 0)
+}
+
+sp {elaborate*reward
+   (state <s> ^name left-right
+              ^reward-link <r>
+              ^location <d-name>
+              ^direction <dir>)
+   (<dir> ^name <d-name> ^reward <d-reward>)
+-->
+   (<r> ^reward <rr>)
+   (<rr> ^value <d-reward>)
+}

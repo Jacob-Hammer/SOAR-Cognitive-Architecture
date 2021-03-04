@@ -1,0 +1,384 @@
+##!
+# @file
+#
+# @created jhammer4 20210125
+
+#
+# Modified and Enhanced by Matthew Versaggi
+# Jan 2nd, 2021
+# Soar version 9.6.0
+
+# water-jug
+# by John E. Laird
+# University of Michigan
+# May 24, 2005
+# Soar version 8.6.1
+
+###
+### ABSTRACT. These Soar productions implement the water-jug task.
+### The task is to find the sequence of steps that fill the three gallon 
+### jug with one gallon of water.  There are a well that has an infinite
+### amount of water, a five gallon jug, and a three gallon jug.
+###
+
+###
+### DESCRIPTION. The task problem space has three operators: empty, 
+### fill, and pour. Empty empties a jug into the well. Fill fills up
+### a jug from the well. Pour pours some or all of the contents
+### from one jug into the other jug. Pour can only pour out the contents 
+### of the jug until the source is empty or the destination is full.
+###
+### State Structure: Each jug has slots to record its capacity [volume],
+### the amount of water it contains [contents], and the capacity 
+### available [empty] which is the volume minus the contents.
+###   (state s1 ^jug j1)
+###   (jug j1 ^volume v1 ^contents c1 ^empty f1),
+### where v1, c1, and f1 are numbers.
+###
+### NOTE:
+## Added Record for recording last operator, and using that knowledge to control search
+## It is commented out. *This greatly reduces the search for a solution.*
+
+
+
+# PROPOSE - 'initialize-water-jug' Operator:
+#
+# Operator that initializes the water jug task - notice we use the 'water-jug' problem space
+# This is a good practice to get into.
+#  If *no* task is selected '-^name', then propose the initialize-water-jug 'operator'.
+
+sp {water-jug*propose*initialize-water-jug
+   (state <s> ^superstate nil 
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-water-jug)}
+
+
+# APPLY - 'initialize-water-jug' Operator:
+# If the initialize-water-jug operator is selected, 
+# then create an empty 5 gallon jug and an empty 3 gallon jug.
+#
+# Uncomment '^last-operator none' if you want to leverage ercording the last operator.
+# *This greatly reduces the search for a solution.*
+
+sp {water-jug*apply*initialize-water-jug
+   (state <s> ^operator.name initialize-water-jug)
+-->
+   (<s> ^name water-jug
+        ^last-operator none
+        ^jug <i> <j>)
+   (<i> ^volume 3
+        ^contents 0)
+   (<j> ^volume 5
+        ^contents 0)
+    (write (crlf) | Start: 1x5 Gallon Jug - Empty, 1x3 Gallon Jug - Empty  |)  
+}
+
+
+# ELABORATE - 'empty' :
+# If the state is named water-jug and a jug can hold volume v and 
+# currently has contents c, then add that it has v - c '(- <v> <c>)' available 
+# (empty) space. As an elaboration rule, it gets evaluated during each decision cycle
+# anytime there is a jug WME in working memory. The old VALUE of '^empty' gets redacted 
+# and replaced by the newly calculated value each time the contents of a jug gets changed.
+
+sp {water-jug*elaborate*empty
+   (state <s> ^name water-jug
+              ^jug <j>)
+   (<j> ^contents <c>
+        ^volume <v>)
+-->
+   (<j> ^empty (- <v> <c>))}
+
+
+###
+### Operators (Proposals and Apply): 'Fill', 'Empty', 'Pour'.
+###
+
+
+# PROPOSE - 'empty' Operator:
+# If the task is water-jug and there is a jug that is *not empty*,
+# then propose emptying that jug.
+
+sp {water-jug*propose*empty
+   (state <s> ^name water-jug
+              ^jug <j>)
+   (<j> ^contents > 0)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name empty
+        ^empty-jug <j>)}
+
+# APPLY - 'empty' Operator:
+# If the task is water-jug and the empty operator is selected for a given jug, 
+# then set that jug's contents to be 0, and remove old ( <contents> -),
+# and its empty to be its volume.
+
+sp {water-jug*apply*empty
+   (state <s> ^name water-jug
+              ^operator <o>
+              ^jug <j>)
+   (<o> ^name empty
+        ^empty-jug <j>)
+   (<j> ^volume <volume>
+        ^contents <contents>)
+-->
+   (<j> ^contents 0
+        ^contents <contents> - )}
+
+
+#PROPOSE - 'fill' Operator:
+# If the task is water-jug and there is a jug that is *not full* '(^empty > 0)', 
+# then propose filling that jug.
+
+sp {water-jug*propose*fill
+   (state <s> ^name water-jug
+              ^jug <j>)
+   (<j> ^empty > 0)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name fill
+        ^fill-jug <j>)}
+
+
+# APPLY - 'fill' Operator:
+# If the task is water-jug and the fill operator is selected for a given jug, 
+# then set that jug's contents to be its volume, and remove old ( <contents> -).
+
+sp {water-jug*apply*fill
+   (state <s> ^name water-jug
+              ^operator <o>
+              ^jug <j>)
+   (<o> ^name fill
+        ^fill-jug <j>)
+   (<j> ^volume <volume>
+        ^contents <contents>)
+-->
+   (<j> ^contents <volume>
+                  <contents> -)}
+
+
+# PROPOSE - 'pour' Operator:
+# If the task is water-jug and there is a jug that is *not full*, and the other 
+# jug is *not empty*, then propose pouring water from the 'second jug' into the 'first jug'.
+# Ensure that the jugs aren't the same jug in WM.
+
+sp {water-jug*propose*pour
+   (state <s> ^name water-jug
+              ^jug <i> { <> <i> <j> })
+   (<i> ^contents > 0 )
+   (<j> ^empty > 0)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name pour
+        ^empty-jug <i>
+        ^fill-jug <j>)}
+
+
+# APPLY - 'pour' *not-empty-source* Operator:
+# If the task is water-jug and the pour operator is selected, 
+#    and the contents of the jug being emptied are 'less than or equal to' 
+#    the empty amount of the jug being filled, 
+# then set the contents of the jug being emptied to 0;
+#      set the contents of the jug being filled to the *sum* of the two jugs:
+#   (+ <jcon> <icon>)
+
+sp {water-jug*apply*pour*not-empty-source
+   (state <s> ^name water-jug
+              ^operator <o>)
+   (<o> ^name pour
+        ^empty-jug <i>
+        ^fill-jug <j>)
+   (<j> ^volume <jvol>
+        ^contents <jcon>
+        ^empty <jempty>)
+   (<i> ^volume <ivol>
+        ^contents { <icon> <= <jempty> })
+-->
+   (<i> ^contents 0 <icon> -)
+   (<j> ^contents (+ <jcon> <icon>) <jcon> - )}
+
+
+# APPLY - 'pour' *empty-source* Operator:
+# If the task is water-jug and the pour operator is selected, and 
+#    the contents of the jug being emptied are 'greater than' the empty amount 
+#    of the jug being filled '(- <icon> <jempty>)', 
+# then set the contents of the jug being emptied to its contents minus the   
+#      empty of the jug being filled;
+#      set the contents of the jug filled to its volume.
+
+sp {water-jug*apply*pour*empty-source
+   (state <s> ^name water-jug
+              ^operator <o>)
+   (<o> ^name pour
+        ^empty-jug <i>
+        ^fill-jug <j>)
+   (<i> ^volume <ivol>
+        ^contents { <icon> > <jempty> })
+   (<j> ^volume <jvol>
+        ^contents <jcon>
+        ^empty <jempty>)
+-->
+   (<i> ^contents (- <icon> <jempty>) <icon> - )
+   (<j> ^contents <jvol> <jcon> -)}
+
+
+
+### The LAST OPERATOR PRODUCTIONS
+###
+
+## Added Record for recording last operator, and using that knowledge to control search
+## This greatly reduces the search for a solution in the problem space.
+
+
+# RECORD - Last Operator:
+# Set the '^last-operator' name to the current operator name.
+sp {water-jug*record*operator
+   (state <s> ^name water-jug
+              ^operator.name <name>)
+-->
+   (<s> ^last-operator <name>)}
+
+# REMOVE - Last Operator:
+# If in WM there is a '^last-operator' != ^operator.name
+# then remove that last operator.
+sp {water-jug*remove*last-operator
+   (state <s> ^name water-jug
+              ^last-operator <name>
+              ^operator.name <> <name>)
+-->
+   (<s> ^last-operator <name> -)}
+
+
+# PROPOSE - select*fill*empty*worst Operator:
+# This Production sets 'fillEmpty' as the 'worst choice' of operators '(<)'
+# under certain conditions
+# Condition: the last operator was the 'fill' and it's current operator is 'empty'. 
+
+sp {water-jug*select*fill*empty*worst
+   (state <s> ^name water-jug
+              ^last-operator fill
+              ^operator <o> +)
+   (<o> ^name empty)
+-->
+   (<s> ^operator <o> <)}
+
+
+# PROPOSE - select*empty*fill*worst:
+# This Production sets 'emptyFill' as the 'worst choice' of operators '(<)'
+# under certain conditions
+# Condition: the last operator was the 'empty' and it's current operator is 'fill'. 
+
+sp {water-jug*select*empty*fill*worst
+   (state <s> ^name water-jug
+              ^last-operator empty
+              ^operator <o> +)
+   (<o> ^name fill)
+-->
+   (<s> ^operator <o> <)}
+
+# PROPOSE - select*pour*pour*worst:
+# This Production sets 'pourPour' as the 'worst choice' of operators '(<)'
+# under certain conditions
+# Condition: the last operator was the 'pour' and it's current operator is 'pour'. 
+#
+sp {water-jug*select*pour*pour*worst
+   (state <s> ^name water-jug
+              ^last-operator pour
+              ^operator <o> +)
+   (<o> ^name pour)
+-->
+   (<s> ^operator <o> <)}
+
+
+# PROPOSE- select*fill*pour*after*fill-empty:
+# This Production sets 'pourPour' as the 'best choice' of operators '(>)'
+# under certain conditions
+# Condition: the last operator was the '(fill or empty)' and it's current operator is 'pour'. 
+sp {water-jug*select*fill*pour*after*fill-empty
+   (state <s> ^name water-jug
+              ^last-operator << fill empty >>
+              ^operator <o> +)
+   (<o> ^name pour)
+-->
+   (<s> ^operator <o> >)}
+
+
+### 
+### MONITOR STATE AND OPERATORS: water-jug: 
+###
+
+# PRODUCTION - Monitor State:
+# If there is a state called 'water-jug', 2 water jugs, of volume 5 and 3 respectively,
+# then print out their respective contents.
+
+sp {water-jug*monitor*state 
+   (state <s> ^name water-jug
+              ^jug <j> <i>)
+   (<j> ^volume 5 ^contents <jcon>)
+   (<i> ^volume 3 ^contents <icon>)
+   --> 
+   (write (crlf) | 5_Gal-Jug: | <jcon> | 3_Gal-Jug: | <icon> )}
+
+
+# PRODUCTION - Monitor Operator Application 'Empty':
+# Watch for an 'empty' water-jug application, and report it.
+
+sp {water-jug*monitor*operator-application*empty
+   (state <s> ^name water-jug
+              ^operator <o>)
+   (<o> ^name empty
+        ^empty-jug.volume <volume>)
+   -->
+   (write (crlf) |  EMPTY(| <volume> |)|)}
+
+
+# PRODUCTION - Monitor Operator Application 'Fill':
+# Watch for an 'fill' water-jug application, and report it.
+
+sp {water-jug*monitor*operator-application*fill
+   (state <s> ^name water-jug
+              ^operator <o>)
+   (<o> ^name fill 
+        ^fill-jug.volume <volume>)
+   -->
+   (write (crlf) |  FILL(| <volume> | Gallon Jug)|)}
+
+
+# PRODUCTION - Monitor Operator Application 'Pour':
+# Watch for an 'pour' water-jug application, and report it.
+
+sp {water-jug*monitor*operator-application*pour
+   (state <s> ^name water-jug
+              ^operator <o>)
+   (<o> ^name pour 
+        ^empty-jug <i>
+        ^fill-jug <j>)
+   (<i> ^volume <ivol> ^contents <icon>)
+   (<j> ^volume <jvol> ^contents <jcon>)
+   -->
+   (write (crlf) |  POUR(| <ivol> |:| <icon> |,| <jvol> |:| <jcon> |)|)}
+
+
+# PRODUCTION - Desired End State:
+# If the task is water-jug and there is a jug with volume three and 
+#    contents of one gallon in it, write that the problem has been 
+#    solved and halt.
+
+sp {water-jug*detect*goal*achieved
+   (state <s> ^name water-jug
+              ^jug <j>)
+   (<j> ^volume 3 ^contents 1)
+-->
+   (write (crlf) |The problem has been solved.|)
+   (halt)}
+
+
+
+
+
+
+
+
+

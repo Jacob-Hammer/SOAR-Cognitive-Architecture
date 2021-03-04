@@ -1,0 +1,85 @@
+##!
+# @file
+#
+# @created jhammer4 20210128
+
+# visualize architectural-wmes  on
+# visualize image-type jpg
+# visualize wm
+# visualize ?
+
+sp {propose*initBank
+    (state <s> ^type state)
+    (<s> -^Bank)
+-->
+    (<s> ^operator <o> + =)
+    # + is preferred
+    # = unary
+    # - reject
+    # ! require
+    # > < prefer one over another operator satisfying same condition 
+    (<o> ^name bank-init)
+}
+ 
+sp {apply*initBank
+    (state <s> ^operator <o>)
+    (<o> ^name bank-init)
+-->
+    (<s> ^Bank <Bank>)
+    (<Bank> ^AccountBalance 200)
+}
+
+sp {propose*BankLow
+#    (state <s> ^Bank <bank1>
+#                     <bank1> ^AccountBalance < 1000)
+    (state <s> ^Bank.AccountBalance < 1000)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name BankLow)
+}
+ 
+ 
+sp {apply*BankLow
+    (state <s> ^operator <o> ^Bank.AccountBalance <BankLow>)
+    (<o> ^name BankLow)
+-->
+    (<s> ^Bank.AccountBalance <BankLow> -)
+    (write | BANK BALANCE   |<BankLow>|  |)
+    (<s> ^Bank.AccountBalance (+ <BankLow> 5000))
+}
+
+sp {propose*BankHigh
+    (state <s> ^Bank.AccountBalance >= 1000)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name BankHigh)
+}
+ 
+sp {apply*BankHigh
+    (state <s> ^operator <o> ^Bank.AccountBalance <BankHigh>)
+    (<o> ^name BankHigh)
+-->
+    (<s> ^Bank.AccountBalance <BankHigh> -)
+    (<s> ^Bank.AccountBalance (+ <BankHigh> 4000))
+}
+
+sp {detect*Bank50000
+    (state <s> ^Bank.AccountBalance >= 50000)
+    -->
+    (write |'Balance over five thousand'|)
+    (halt)
+}
+
+sp {detect*printBalance
+    (state <s> ^Bank.AccountBalance <bal>)
+    -->
+    (write |Balance is: | <bal> )
+}
+
+# Use dot notation to reference the value at Bank.AccountBalance
+# If the AccountBalance >= 1000, add 4000
+# If the AccountBalance < 1000, add 5000
+# Once the AccountBalance >= 5000, print 'Balance over five thousand'
+
+# To accomplish the three initial comparisons, two operators will likely be necessary
+# Be sure to encode a variable for the rules to retract, or the selected operator (for any of the rules) will exist.

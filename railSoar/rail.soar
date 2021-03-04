@@ -1,0 +1,167 @@
+##!
+# @file
+#
+# @created jhammer4 20210215
+
+sp {rail*propose*initialize-rail
+   (state <s> ^superstate nil 
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-rail)}
+
+sp {rail*apply*initialize-rail
+   (state <s> ^operator.name initialize-rail)
+-->
+   (<s> ^name rail
+        ^last-operator none
+        ^car <yellow> <blue> <red>)
+   (<yellow> ^position 2)
+   (<blue> ^position 3)
+   (<red> ^position 4)
+    (write (crlf) | Start: yellow: 2, blue: 3, red: 4  |)  
+}
+
+###############
+#             ----11-12-
+#            /
+#           /
+#          /
+# --1-2-----------3-4-
+###############
+
+###############
+# Hierarchy actions:
+#
+# Move, pull, push
+###############
+sp {propose*move1
+    (state <s> ^rail <rail>
+               ^car <car>)
+    (<car> ^position { << 1 2 >> <position> })
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name add-1)
+    }
+
+sp {apply*move1right
+    (state <s> ^operator <o>
+               ^rail <rail>)
+    (<o> ^name add-1)
+    (<rail> ^car <car>)
+-->
+    (<rail> ^car <car> -)
+    (<car> ^position (+ 1 <car>))
+    }
+
+sp {propose*move10right
+    (state <s> ^rail <rail>
+               ^car <car>)
+    (<car> ^position = 1)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name add-10)
+    }
+
+sp {apply*move1
+    (state <s> ^operator <o>
+               ^rail <rail>)
+    (<o> ^name add-10)
+    (<rail> ^car <car>)
+-->
+    (<rail> ^car <car> -)
+    (<car> ^position (+ 10 <car>))
+    }
+
+sp {propose*move10left
+    (state <s> ^rail <rail>
+               ^car <car>)
+    (<car> ^position = 1)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name minus-10)
+    }
+
+sp {apply*move10left
+    (state <s> ^operator <o>
+               ^rail <rail>)
+    (<o> ^name minus-10)
+    (<rail> ^car <car>)
+-->
+    (<rail> ^car <car> -)
+    (<car> ^position (- <car> 10))
+    }
+
+sp {propose*move1left
+    (state <s> ^rail <rail>
+               ^car <car>)
+    (<car> ^position = 1)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name minus-1)
+    }
+
+sp {apply*move1
+    (state <s> ^operator <o>
+               ^rail <rail>)
+    (<o> ^name minus-1)
+    (<rail> ^car <car>)
+-->
+    (<rail> ^car <car> -)
+    (<car> ^position (- <car> 1))
+    }
+#
+## Propose*move
+## If there is normalfood or bonusfood in an adjacent cell,
+## propose move in the direction of that cell
+## and indicate that this operator can be selected randomly. 
+#
+#sp {propose*move*normalfood
+# (state <s> ^io <io>)
+# (<io> ^input-link <input-link>)
+# (<input-link> ^my-location <my-loc>)
+# (<my-loc> ^<dir> <cell>)
+# (<cell> ^content normalfood)
+#-->
+# (<s> ^operator <o> +)
+# (<s> ^operator <o> =)
+# (<o> ^name move
+# ^direction <dir>)}
+#
+#sp {propose*move*normalfood
+# (state <s> ^io.input-link.my-location.<dir>.content normalfood)
+#-->
+# (<s> ^operator <o> + =)
+# (<o> ^name move
+# ^direction <dir>)}
+#
+## Propose*move:
+## If there is normalfood, bonusfood, eater, or empty in an adjacent cell,
+## propose move in the direction of that cell, with the cell’s content,
+## and indicate that this operator can be selected randomly.
+#
+#sp {propose*move
+# (state <s> ^io.input-link.my-location.<dir>.content
+#{ <content> << empty normalfood bonusfood eater >> })
+#-->
+# (<s> ^operator <o> + =)
+# (<o> ^name move
+# ^direction <dir>
+# ^content <content>)}
+
+
+
+# PRODUCTION - Desired End State:
+# If the task is rail and there is a jug with volume three and 
+#    contents of one gallon in it, write that the problem has been 
+#    solved and halt.
+
+sp {rail*detect*goal*achieved
+   (state <s> ^name rail
+              ^car <yellow> <blue> <red>)
+   (<yellow> ^position 2)
+   (<blue> ^position 4)
+   (<red> ^position 3)
+-->
+   (write (crlf) |The problem has been solved.|)
+   (halt)}

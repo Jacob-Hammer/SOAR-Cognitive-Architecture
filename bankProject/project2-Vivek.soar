@@ -1,0 +1,154 @@
+##!
+# @file
+#
+# @created jhammer4 20210204
+
+sp {propose*initialize*bank
+
+    (state <s> ^type state)
+
+    (<s> -^bank)    
+
+-->
+
+    (<s> ^operator <o> + =)
+
+    (<o> ^name initialize-bank)
+
+    }
+
+
+
+
+
+sp {apply*initialize*bank
+
+    (state <s> ^operator <o>)
+
+    (<o> ^name initialize-bank)
+
+-->
+
+    (<s> ^bank <bank>)
+
+    (<bank> ^AccountBalance 200)
+
+    }
+
+
+
+
+
+sp {propose*balance*greater*1000
+
+    (state <s> ^bank <bank>)
+
+    (<bank> ^AccountBalance > 1000)
+
+-->
+
+    (<s> ^operator <o> + =)
+
+    (<o> ^name add-fourk)
+
+    }
+
+
+
+
+
+sp {apply*balance*greater*1000
+
+    (state <s> ^operator <o>
+
+               ^bank <bank>)
+
+    (<o> ^name add-fourk)
+
+    (<bank> ^AccountBalance <actbal>)
+
+    
+
+    
+
+-->
+
+#    (<s> ^bank <bank>)  #Already referenced above! Do this linking in propose phase
+
+    (<bank> ^AccountBalance <actbal> -)
+
+    (<bank> ^AccountBalance (+ 4000 <actbal>))
+
+    }
+
+
+
+
+
+sp {propose*balance*lesser*1000
+
+    (state <s> ^bank <bank>)
+
+    (<bank> ^AccountBalance < 1000)
+
+-->
+
+    (<s> ^operator <o> + =)
+
+    (<o> ^name add-fivek)
+
+    }
+
+
+
+
+
+sp {apply*balance*lesser*1000
+
+    (state <s> ^operator <o>
+
+               ^bank <bank>)
+
+    (<o> ^name add-fivek)
+
+    (<bank> ^AccountBalance <actbal>)
+
+-->
+
+    (<s> ^bank <bank>)
+
+    (<bank> ^AccountBalance (+ <actbal> 5000))
+
+    (<bank> ^AccountBalance <actbal> -)
+
+    }
+
+
+
+sp {detect*account*balance
+
+    (state <s> ^bank.AccountBalance <actbal>)
+
+-->
+
+    (write (crlf) |BALANCE VAL :| <actbal>)
+
+    }
+
+
+
+
+
+sp {detect*success
+
+    (state <s> ^bank <bank>)
+
+    (<bank> ^AccountBalance >= 50000)
+
+-->
+
+    (write (crlf) | BALANCE OVER 50000| )
+
+    (halt)
+
+    }

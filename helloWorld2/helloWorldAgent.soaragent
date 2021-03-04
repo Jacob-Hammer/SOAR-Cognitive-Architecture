@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soaragent>
+  <startfile path="helloWorld2.soar" />
+  <members>
+    <member path="helloWorld2.soar" />
+  </members>
+</soaragent>
+

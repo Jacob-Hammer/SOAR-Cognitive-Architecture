@@ -1,0 +1,18 @@
+digraph g {
+   node [shape = "box" fontsize = "16"];
+   edge [];
+   graph [ rankdir = "TD" splines = "polyline"];
+   "S1" [
+      colorscheme="X11"
+      penwidth = "0"
+      label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+                <TR> <TD COLSPAN="3">S1</TD> </TR>
+                <TR> <TD  > count</TD><TD  > 10</TD> </TR>
+                <TR> <TD  > name</TD><TD  > count</TD> </TR>
+              </TABLE>
+              >
+   ];
+
+
+}
+
