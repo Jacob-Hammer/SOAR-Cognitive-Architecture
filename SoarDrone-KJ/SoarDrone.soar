@@ -1,0 +1,67 @@
+sp {cleanOutput*up
+    (state <s> ^superstate nil
+               ^operator <o>
+               ^io.output-link <out>)
+    (<out> ^up false)
+    (<o> ^name move)
+-->
+    (<out> ^up false -)
+}
+
+sp {cleanOutput*down
+    (state <s> ^superstate nil
+               ^operator <o>
+               ^io.output-link <out>)
+    (<out> ^up true)
+    (<o> ^name doNothing)
+-->
+    (<out> ^up true -)
+}
+
+
+
+sp {propose*doNothing
+    (state <s> ^superstate nil)
+    (<s> ^io.input-link <input>)
+    (<input> ^position <pos>)
+    (<pos> ^yValue <yVal> > 150)
+    (<pos> ^speed <speed>)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name move)
+    (<o> ^yValue <yVal>)
+    (<o> ^speed <speed>)
+}
+
+sp {apply*doNothing
+    (state <s> ^operator <o>)
+    (<o> ^name move)
+    (<s> ^io.output-link <output>)
+    (<o> ^yValue <yVal>)
+    (<o> ^speed <speed>)
+-->
+    (<output> ^up true)
+}
+
+sp {propose*Move
+    (state <s> ^superstate nil)
+    (<s> ^io.input-link <input>)
+    (<input> ^position <pos>)
+    (<pos> ^yValue <yVal> < 150)
+    (<pos> ^speed <speed>)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name doNothing)
+    (<o> ^yValue <yVal>)
+    (<o> ^speed <speed>)
+}
+
+sp {apply*Move
+    (state <s> ^operator <o>)
+    (<s> ^io.output-link <output>)
+    (<o> ^name doNothing)
+    (<o> ^yValue <yVal>)
+    (<o> ^speed <speed>)
+-->
+    (<output> ^up false)
+}
