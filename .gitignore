@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Eclipse Classpath -- Katie and Jacob continual conflicts on SoarDrone
+*.classpath
