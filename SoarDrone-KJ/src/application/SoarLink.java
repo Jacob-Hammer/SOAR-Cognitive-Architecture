@@ -14,22 +14,27 @@ public class SoarLink {
 	
 	private Kernel kernel;
 	private Agent agent;
-	private String move;
+	private String moveX = "";
+	private String moveY = "";
 	
-	public boolean moveUp() {
-		return Boolean.parseBoolean(moveUp);
+//	public boolean moveUpward() {
+//		return Boolean.parseBoolean(move);
+//	}
+	public boolean moveUpward() {
+		boolean y = false;
+    	System.out.println("moveUpward() moveX is " + moveX);
+		if (moveX.equals("down")) {
+			y = true;
+		}
+		return y;
 	}
-
-	public boolean moveLeft() {
-		return Boolean.parseBoolean(moveLeft);
-	}
-
-	public boolean moveRight() {
-		return Boolean.parseBoolean(moveRight);
-	}
-
-	public boolean moveDown() {
-		return Boolean.parseBoolean(moveDown);
+	public boolean moveLeftward() {
+		boolean x = false;
+		System.out.println("moveLeftward() moveY is " + moveY);
+		if (moveY.equals("left")) {
+			x = true;
+		}
+		return x;
 	}
 	
 	public SoarLink(boolean spawnDebugger) {
@@ -49,8 +54,7 @@ public class SoarLink {
         	agent.SpawnDebugger();
         }
         
-        move = "";
-        
+        //move = "";
         
         kernel.RegisterForUpdateEvent(
 	        smlUpdateEventId.smlEVENT_AFTER_ALL_OUTPUT_PHASES,
@@ -59,23 +63,18 @@ public class SoarLink {
 	                    Kernel kernel, int runFlags) {
 	                kernel.StopAllAgents();
 	                	                
-	                moveUp = agent.GetOutputLink().GetChild(0).GetValueAsString();
-	                System.out.println("Agent says move " + moveUp);
-
-	                // I'm not sure what child we need to give it. 
-
-	                moveLeft = agent.GetOutputLink().GetChild(1).GetValueAsString();
-	                System.out.println("Agent says move " + moveLeft);
-
-	                moveRight = agent.GetOutputLink().GetChild(2).GetValueAsString();
-	                System.out.println("Agent says move " + moveRight);
-
-	                moveDown = agent.GetOutputLink().GetChild(3).GetValueAsString();
-	                System.out.println("Agent says move " + moveDown);
+	                moveX = agent.GetOutputLink().GetChild(0).GetValueAsString();
+	                moveY = agent.GetOutputLink().GetChild(0).GetValueAsString();
+	            	System.out.println("SoarLink() moveX is " + moveX);
+	            	System.out.println("SoarLink() moveY is " + moveY);
+//	                if(move=="down") {
+//                        moveUp = agent.GetOutputLink().GetChild(0).GetValueAsString();
+//                    }
+//	                if(move=="up") {
+//                        moveUp = agent.GetOutputLink().GetChild(0).GetValueAsString();
+//                    }
 	                
-		
 	                agent.ClearOutputLinkChanges();
-	
 	            	}
 	        }, null);
 	}
@@ -95,7 +94,6 @@ public class SoarLink {
 		memory.add(positionBlock);
 		
 		agent.CreateFloatWME(positionBlock, "yValue", y);
-		agent.CreateFloatWME(positionBlock, "xValue", x);
 		agent.CreateFloatWME(positionBlock, "speed", speed);
 		
 		System.out.println("RUN");
