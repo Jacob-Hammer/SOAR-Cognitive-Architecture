@@ -10,16 +10,16 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 public class Main extends Application {
-    public static final double W = 300;
-    public static final double H = 300;
+    public static final double W = 900;
+    public static final double H = 900;
 
-    public static final double RECTW = 20;
-    public static final double RECTH = 20;
+    public static final double RECTW = 60;
+    public static final double RECTH = 60;
     public static double GRAVITY = 0.03;
     public static double WIND = 0.03;
     
-    private double x = 110;
-    private double y = 80;
+    private double x = 330;
+    private double y = 240;
     private double speedX;
     private double speedY;
     
@@ -36,17 +36,17 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-            	if(y > 280) {
+            	if(y > 840) {
             		speedY = 0;
-            		y = 280;
+            		y = 840;
             	}
             	if(y < 0) {
             		speedY = 0;
             		y = 0;
             	}
-            	if(x > 280) {
+            	if(x > 840) {
             		speedX = 0;
-            		x = 280;
+            		x = 840;
             	}
             	if(x < 0) {
             		speedX = 0;
@@ -56,7 +56,7 @@ public class Main extends Application {
             	if(link.moveUp()) {
             		System.out.println("Agent moves up");
             		System.out.println("----");
-            		speedY = 1;
+            		speedY = 3;
                     speedX = 0;
                     GRAVITY = 0.02;
             	} 
@@ -65,7 +65,7 @@ public class Main extends Application {
             	if(link.moveLeft()) {
             		System.out.println("Agent moves left");
             		System.out.println("----");
-            		speedX = -1;
+            		speedX = -3;
             		speedY = 0;
             		WIND = 0.02;
             	} 
@@ -73,7 +73,7 @@ public class Main extends Application {
                 if(link.moveRight()) {
                     System.out.println("Agent moves right");
                     System.out.println("----");
-                    speedX = 1;
+                    speedX = 3;
                     speedY = 0;
                     WIND = -0.02;
                     
@@ -83,7 +83,7 @@ public class Main extends Application {
                 if(link.moveDown()) {
                     System.out.println("Agent moves down");
                     System.out.println("----");
-                    speedY = -1;
+                    speedY = -3;
                     speedX = 0;
                     GRAVITY = 0.02;
                 } 
@@ -107,10 +107,10 @@ public class Main extends Application {
                 GraphicsContext gc = canvas.getGraphicsContext2D();
                 gc.setFill(Color.WHITE);
                 gc.fillRect(0, 0, W, H);
-                gc.strokeLine(100, 100, 100, 180); //y top
-                gc.strokeLine(180, 100, 180, 180); //y bottom
-                gc.strokeLine(100, 100, 180, 100); //x top
-                gc.strokeLine(100, 180, 180, 180); //x bottom
+                gc.strokeLine(300, 300, 300, 540); //y top
+                gc.strokeLine(540, 300, 540, 540); //y bottom
+                gc.strokeLine(300, 300, 540, 300); //x top
+                gc.strokeLine(300, 540, 540, 540); //x bottom
                 gc.setFill(Color.ORANGE);
                 gc.fillRect(
                     x,
@@ -141,15 +141,15 @@ public class Main extends Application {
 
         buttonStep.setTranslateX(0);
         buttonStep.setTranslateY(0);
-        buttonUp.setTranslateX(45);
+        buttonUp.setTranslateX(135);
         buttonUp.setTranslateY(0);
-        buttonLeft.setTranslateX(90);
+        buttonLeft.setTranslateX(270);
         buttonLeft.setTranslateY(0);
-        buttonRight.setTranslateX(135);
+        buttonRight.setTranslateX(305);
         buttonRight.setTranslateY(0);
-        buttonDown.setTranslateX(180);
+        buttonDown.setTranslateX(540);
         buttonDown.setTranslateY(0);
-        buttonCenter.setTranslateX(225);
+        buttonCenter.setTranslateX(675);
         buttonCenter.setTranslateY(0);
 
         
@@ -159,19 +159,19 @@ public class Main extends Application {
         });
 
         buttonUp.setOnAction(actionEvent ->  {
-            y = 270;
+            y = 810;
         });
 
         buttonLeft.setOnAction(actionEvent ->  {
-            x = 30;
+            x = 90;
         });
 
         buttonRight.setOnAction(actionEvent ->  {
-            x = 270;
+            x = 810;
         });
 
         buttonDown.setOnAction(actionEvent ->  {
-            y = 30;
+            y = 90;
         });
         
         
