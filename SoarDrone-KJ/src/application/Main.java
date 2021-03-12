@@ -20,8 +20,8 @@ public class Main extends Application {
     
     private double x = 330;
     private double y = 240;
-    private double speedX;
-    private double speedY;
+    private double speedX = 1;
+    private double speedY = 1;
     
     private boolean step = false;
     
@@ -36,6 +36,8 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+            	
+            	// Set boundaries of map
             	if(y > 840) {
             		speedY = 0;
             		y = 840;
@@ -53,15 +55,14 @@ public class Main extends Application {
             		x = 0;
             	}
             	
+            	// Adjust speed and influence based on Soar link
             	if(link.moveUp()) {
             		System.out.println("Agent moves up");
             		System.out.println("----");
             		speedY = 3;
                     speedX = 0;
-                    GRAVITY = 0.02;
+                    GRAVITY = -0.02;
             	} 
-
-
             	if(link.moveLeft()) {
             		System.out.println("Agent moves left");
             		System.out.println("----");
@@ -69,7 +70,6 @@ public class Main extends Application {
             		speedY = 0;
             		WIND = 0.02;
             	} 
-
                 if(link.moveRight()) {
                     System.out.println("Agent moves right");
                     System.out.println("----");
@@ -78,8 +78,6 @@ public class Main extends Application {
                     WIND = -0.02;
                     
                 } 
-
-
                 if(link.moveDown()) {
                     System.out.println("Agent moves down");
                     System.out.println("----");
@@ -87,7 +85,6 @@ public class Main extends Application {
                     speedX = 0;
                     GRAVITY = 0.02;
                 } 
-
                 if(link.moveNowhere()) {
                     System.out.println("Agent moves nowhere");
                     System.out.println("----");
@@ -97,20 +94,22 @@ public class Main extends Application {
                     WIND = -0.02;
                 } 
 
-            	speedY = speedY + GRAVITY;
-            	speedX = speedX + WIND;
+                // Adjust speed
+//            	speedY = speedY + GRAVITY;
+//            	speedX = speedX + WIND;
             	
+            	// Move box based on speed
             	y = y + speedY;
             	x = x + speedX;
             	
-            	
+            	// Set graphics
                 GraphicsContext gc = canvas.getGraphicsContext2D();
                 gc.setFill(Color.WHITE);
                 gc.fillRect(0, 0, W, H);
-                gc.strokeLine(300, 300, 300, 540); //y top
-                gc.strokeLine(540, 300, 540, 540); //y bottom
-                gc.strokeLine(300, 300, 540, 300); //x top
-                gc.strokeLine(300, 540, 540, 540); //x bottom
+                gc.strokeLine(300, 300, 300, 540); // center box y top
+                gc.strokeLine(540, 300, 540, 540); // center box y bottom
+                gc.strokeLine(300, 300, 540, 300); // center box x top
+                gc.strokeLine(300, 540, 540, 540); // center box x bottom
                 gc.setFill(Color.ORANGE);
                 gc.fillRect(
                     x,
@@ -119,8 +118,9 @@ public class Main extends Application {
                     RECTH
                 );
                 
-                link.sendValues(x, y, speedY);
-                link.sendValues(x, y, speedX);
+                // Send values from Soar link
+//                link.sendValues(x, y, speedX, speedY);
+                link.sendValues(x, y);
                 
                if(step) {
             	   stop();
@@ -130,15 +130,15 @@ public class Main extends Application {
             }
         };
         
+        // Create buttons
         Button buttonStep = new Button("Step");
-        Button buttonUp = new Button("Something Unhealthy 1");
-        Button buttonLeft = new Button("Something Unhealthy 2");
-        Button buttonRight = new Button("Something Unhealthy 3");
-        Button buttonDown = new Button("Something Unhealthy 4");
-        Button buttonCenter = new Button("Person adheres to all careplans");
+        Button buttonUp = new Button("Unhealthy 1");
+        Button buttonLeft = new Button("Unhealthy 2");
+        Button buttonRight = new Button("Unhealthy 3");
+        Button buttonDown = new Button("Unhealthy 4");
+        Button buttonCenter = new Button("Healthy!");
 
-    
-
+        // Set button locations
         buttonStep.setTranslateX(0);
         buttonStep.setTranslateY(0);
         buttonUp.setTranslateX(135);
@@ -152,7 +152,6 @@ public class Main extends Application {
         buttonCenter.setTranslateX(675);
         buttonCenter.setTranslateY(0);
 
-        
         buttonStep.setOnAction(actionEvent ->  {
         	step = false;
             timer.start();
@@ -160,18 +159,26 @@ public class Main extends Application {
 
         buttonUp.setOnAction(actionEvent ->  {
             y = 810;
+//        	speedY = -30;
+//        	speedY += 3;
         });
 
         buttonLeft.setOnAction(actionEvent ->  {
             x = 90;
+//            speedX = -30;
+//            speedX += -3;
         });
 
         buttonRight.setOnAction(actionEvent ->  {
             x = 810;
+//            speedX = 30;
+//            speedX += 3;
         });
 
         buttonDown.setOnAction(actionEvent ->  {
             y = 90;
+//            speedY = 30;
+//            speedY += -3;
         });
         
         

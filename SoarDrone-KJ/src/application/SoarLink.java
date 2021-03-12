@@ -81,32 +81,33 @@ public class SoarLink {
 	                System.out.println("Agent says move " + move);
 
 	                // I'm not sure what child we need to give it. 
-	                if(move=="up"){
-	                	moveup = true;
-	                }
-
-	                if(move=="left"){
-	                	moveleft = true;
-	                }
-
-	                if(move=="right"){
-	                	moveright = true;
-	                }
-
-	                if(move=="down"){
-	                	movedown = true;
-	                }
-
-	                if(move=="nothing"){
-	                	movenowhere = true;
-	                }
+//	                if(move.equals("up")){
+//	                	moveup = true;
+//	                }
+//
+//	                if(move.equals("left")){
+//	                	moveleft = true;
+//	                }
+//
+//	                if(move.equals("right")){
+//	                	moveright = true;
+//	                }
+//
+//	                if(move.equals("down")){
+//	                	movedown = true;
+//	                }
+//
+//	                if(move.equals("nothing")){
+//	                	movenowhere = true;
+//	                }
 	                
 	                agent.ClearOutputLinkChanges();
 	            	}
 	        }, null);
 	}
 	
-	public void sendValues(double x, double y, double speed) {
+//	public void sendValues(double x, double y, double speedX, double speedY) {
+	public void sendValues(double x, double y) {
 		Iterator<Identifier> wmeIter = memory.iterator();
 		while (wmeIter.hasNext()) {
 			Identifier wme = wmeIter.next();
@@ -122,7 +123,8 @@ public class SoarLink {
 		
 		agent.CreateFloatWME(positionBlock, "yValue", y);
 		agent.CreateFloatWME(positionBlock, "xValue", x);
-		agent.CreateFloatWME(positionBlock, "speed", speed);
+//		agent.CreateFloatWME(positionBlock, "speedX", speedX);
+//		agent.CreateFloatWME(positionBlock, "speedY", speedY);
 		
 		System.out.println("RUN");
 		
