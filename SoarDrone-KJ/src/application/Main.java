@@ -13,8 +13,8 @@ public class Main extends Application {
     public static final double W = 900;
     public static final double H = 900;
 
-    public static final double RECTW = 60;
-    public static final double RECTH = 60;
+    public static final double RECTW = 40;
+    public static final double RECTH = 40;
     public static double GRAVITY = 0.03;
     public static double WIND = 0.03;
     
