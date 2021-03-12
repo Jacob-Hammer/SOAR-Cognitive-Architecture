@@ -53,49 +53,56 @@ public class Main extends Application {
             		x = 0;
             	}
             	
-            	if(link.moveUpward()) {
+            	if(link.moveUp()) {
             		System.out.println("Agent moves up");
             		System.out.println("----");
-            		GRAVITY = -0.02;
-            	} else {
-            		GRAVITY = 0.01;
-            		System.out.println("Agent moves down");
-            		System.out.println("----");
-            	}
-            	if(link.moveLeftward()) {
+                    ySpeed = 1;
+                    xSpeed = 0;
+                    GRAVITY = 0.02
+            	} 
+
+
+            	if(link.moveLeft()) {
             		System.out.println("Agent moves left");
             		System.out.println("----");
-            		WIND = -0.02;
-            	} else {
-            		WIND = 0.01;
-            		System.out.println("Agent moves right");
-            		System.out.println("----");
-            	}
-            	
-            	
+                    xSpeed = -1;
+                    ySpeed = 0;
+            		WIND = 0.02;
+            	} 
+
+                if(link.moveRight()) {
+                    System.out.println("Agent moves right");
+                    System.out.println("----");
+                    xSpeed = 1;
+                    ySpeed = 0;
+                    WIND = -0.02;
+                    
+                } 
+
+
+                if(link.moveDown()) {
+                    System.out.println("Agent moves down");
+                    System.out.println("----");
+                    ySpeed = -1;
+                    xSpeed = 0;
+                    GRAVITY = 0.02;
+                } 
+
+                if(link.moveNowhere()) {
+                    System.out.println("Agent moves nowhere");
+                    System.out.println("----");
+                    ySpeed = 0;
+                    xSpeed = 0;
+                    GRAVITY = 0.02;
+                    WIND = -0.02;
+                } 
+
             	speedY = speedY + GRAVITY;
             	speedX = speedX + WIND;
             	
             	y = y + speedY;
             	x = x + speedX;
             	
-//            	if(link.moveUp() && interval == 5) {
-//            		System.out.println("Agent says move up");
-//        			speed = -1;
-//        			interval = 0;
-//        		} else { 
-//        			interval++;
-//        		}
-//            	
-//            	speed = speed + GRAVITY;
-//            	
-//        		y = y + speed;
-        	
-        		
-            	
-            	
-            	
-        		interval++; 
             	
                 GraphicsContext gc = canvas.getGraphicsContext2D();
                 gc.setFill(Color.WHITE);
@@ -124,27 +131,60 @@ public class Main extends Application {
         };
         
         Button buttonStep = new Button("Step");
-        Button buttonRun = new Button("Run");
+        Button buttonUp = new Button("Something Unhealthy 1");
+        Button buttonLeft = new Button("Something Unhealthy 2");
+        Button buttonRight = new Button("Something Unhealthy 3");
+        Button buttonDown = new Button("Something Unhealthy 4");
+        Buttone buttonCenter = new Button("Person adheres to all careplans")
+
+    
+
         buttonStep.setTranslateX(0);
         buttonStep.setTranslateY(0);
-        buttonRun.setTranslateX(45);
-        buttonRun.setTranslateY(0);
+        buttonUp.setTranslateX(45);
+        buttonUp.setTranslateY(0);
+        buttonLeft.setTranslateX(90);
+        buttonLeft.setTranslateY(0);
+        buttonRight.setTranslateX(135);
+        buttonRight.setTranslateY(0);
+        buttonDown.setTranslateX(180);
+        buttonDown.setTranslateY(0);
+        buttonCenter.setTranslateX(225);
+        buttonCenter.setTranslateY(0);
+
         
         buttonStep.setOnAction(actionEvent ->  {
         	step = false;
             timer.start();
         });
-        
-        buttonRun.setOnAction(actionEvent ->  {
-        	y = 270;
+
+        buttonUp.setOnAction(actionEvent ->  {
+            y = 270;
         });
+
+        buttonLeft.setOnAction(actionEvent ->  {
+            x = 30;
+        });
+
+        buttonRight.setOnAction(actionEvent ->  {
+            x = 270;
+        });
+
+        buttonDown.setOnAction(actionEvent ->  {
+            y = 30;
+        });
+        
         
         stage.setScene(
             new Scene(
                 new Pane(
                     canvas,
                     buttonStep,
-                    buttonRun
+                    buttonUp,
+                    buttonLeft,
+                    buttonRight,
+                    buttonDown
+                    buttonCenter
                 )
             )
         );
