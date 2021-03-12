@@ -25,23 +25,29 @@ public class SoarLink {
 //		return Boolean.parseBoolean(move);
 //	}
 	public boolean moveUp() {
-		return Boolean.parseBoolean(moveup);
+//		return Boolean.parseBoolean(moveup);
+		return moveup;
 	}
+	
 
 	public boolean moveLeft() {
-		return Boolean.parseBoolean(moveleft);
+//		return Boolean.parseBoolean(moveleft);
+		return moveleft;
 	}
 
 	public boolean moveRight() {
-		return Boolean.parseBoolean(moveright);
+//		return Boolean.parseBoolean(moveright);
+		return moveright;
 	}
 
 	public boolean moveDown() {
-		return Boolean.parseBoolean(movedown);
+//		return Boolean.parseBoolean(movedown);
+		return movedown;
 	}
 
 	public boolean moveNowhere() {
-		return Boolean.parseBoolean(movenowhere);
+//		return Boolean.parseBoolean(movenowhere);
+		return movenowhere;
 	}
 
 	
@@ -75,23 +81,23 @@ public class SoarLink {
 	                System.out.println("Agent says move " + move);
 
 	                // I'm not sure what child we need to give it. 
-	                if(move=='up'){
+	                if(move=="up"){
 	                	moveup = true;
 	                }
 
-	                if(move=='left'){
+	                if(move=="left"){
 	                	moveleft = true;
 	                }
 
-	                if(move=='right'){
+	                if(move=="right"){
 	                	moveright = true;
 	                }
 
-	                if(move=='down'){
+	                if(move=="down"){
 	                	movedown = true;
 	                }
 
-	                if(move=='nothing'){
+	                if(move=="nothing"){
 	                	movenowhere = true;
 	                }
 	                
@@ -100,7 +106,7 @@ public class SoarLink {
 	        }, null);
 	}
 	
-	public void sendValues(double y, double speed) {
+	public void sendValues(double x, double y, double speed) {
 		Iterator<Identifier> wmeIter = memory.iterator();
 		while (wmeIter.hasNext()) {
 			Identifier wme = wmeIter.next();

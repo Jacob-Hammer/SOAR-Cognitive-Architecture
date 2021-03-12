@@ -56,25 +56,25 @@ public class Main extends Application {
             	if(link.moveUp()) {
             		System.out.println("Agent moves up");
             		System.out.println("----");
-                    ySpeed = 1;
-                    xSpeed = 0;
-                    GRAVITY = 0.02
+            		speedY = 1;
+                    speedX = 0;
+                    GRAVITY = 0.02;
             	} 
 
 
             	if(link.moveLeft()) {
             		System.out.println("Agent moves left");
             		System.out.println("----");
-                    xSpeed = -1;
-                    ySpeed = 0;
+            		speedX = -1;
+            		speedY = 0;
             		WIND = 0.02;
             	} 
 
                 if(link.moveRight()) {
                     System.out.println("Agent moves right");
                     System.out.println("----");
-                    xSpeed = 1;
-                    ySpeed = 0;
+                    speedX = 1;
+                    speedY = 0;
                     WIND = -0.02;
                     
                 } 
@@ -83,16 +83,16 @@ public class Main extends Application {
                 if(link.moveDown()) {
                     System.out.println("Agent moves down");
                     System.out.println("----");
-                    ySpeed = -1;
-                    xSpeed = 0;
+                    speedY = -1;
+                    speedX = 0;
                     GRAVITY = 0.02;
                 } 
 
                 if(link.moveNowhere()) {
                     System.out.println("Agent moves nowhere");
                     System.out.println("----");
-                    ySpeed = 0;
-                    xSpeed = 0;
+                    speedY = 0;
+                    speedX = 0;
                     GRAVITY = 0.02;
                     WIND = -0.02;
                 } 
@@ -119,8 +119,8 @@ public class Main extends Application {
                     RECTH
                 );
                 
-                link.sendValues(y, speedY);
-                link.sendValues(x, speedX);
+                link.sendValues(x, y, speedY);
+                link.sendValues(x, y, speedX);
                 
                if(step) {
             	   stop();
@@ -135,7 +135,7 @@ public class Main extends Application {
         Button buttonLeft = new Button("Something Unhealthy 2");
         Button buttonRight = new Button("Something Unhealthy 3");
         Button buttonDown = new Button("Something Unhealthy 4");
-        Buttone buttonCenter = new Button("Person adheres to all careplans")
+        Button buttonCenter = new Button("Person adheres to all careplans");
 
     
 
@@ -183,7 +183,7 @@ public class Main extends Application {
                     buttonUp,
                     buttonLeft,
                     buttonRight,
-                    buttonDown
+                    buttonDown,
                     buttonCenter
                 )
             )
