@@ -2,18 +2,28 @@ sp {cleanOutput*up
     (state <s> ^superstate nil
                ^operator <o>
                ^io.output-link <out>)
-    (<out> ^up false)
-    (<o> ^name move)
+    (<out> ^direction up)
+    (<o> ^name moveDown)
 -->
     (<out> ^direction up -)
+}
+
+sp {cleanOutput*down
+    (state <s> ^superstate nil
+               ^operator <o>
+               ^io.output-link <out>)
+    (<out> ^direction down)
+    (<o> ^name moveUp)
+-->
+    (<out> ^direction down -)
 }
 
 sp {cleanOutput*left
     (state <s> ^superstate nil
                ^operator <o>
                ^io.output-link <out>)
-    (<out> ^left true)
-    (<o> ^name doNothing)
+    (<out> ^direction left)
+    (<o> ^name moveLeft)
 -->
     (<out> ^direction left -)
 }
@@ -22,152 +32,233 @@ sp {cleanOutput*right
     (state <s> ^superstate nil
                ^operator <o>
                ^io.output-link <out>)
-    (<out> ^right true)
-    (<o> ^name doNothing)
+    (<out> ^direction right)
+    (<o> ^name moveRight)
 -->
     (<out> ^direction right -)
 }
 
-sp {cleanOutput*down
-    (state <s> ^superstate nil
-               ^operator <o>
-               ^io.output-link <out>)
-    (<out> ^down false)
-    (<o> ^name move)
--->
-    (<out> ^direction down -)
-}
-
-sp {cleanOutput*nothing
-    (state <s> ^superstate nil
-               ^operator <o>
-               ^io.output-link <out>)
-    (<out> ^down false)
-    (<o> ^name move)
--->
-    (<out> ^direction nothing -)
-}
-
 # ----------------------------------------
 # ----------------------------------------
 
-sp {propose*doNothing
+sp {propose*moveDown
     (state <s> ^superstate nil)
     (<s> ^io.input-link <input>)
     (<input> ^position <pos>)
-    (<pos> ^yValue <yVal> { > 540 < 300 })
-    (<pos> ^xValue <xVal> { > 330 < 570 })
+    (<pos> ^yValue <yVal> > 150)
     (<pos> ^speed <speed>)
 -->
     (<s> ^operator <o> + =)
-    (<o> ^name move)
+    (<o> ^name moveDown)
     (<o> ^yValue <yVal>)
-    (<o> ^xValue <xVal>)
     (<o> ^speed <speed>)
 }
 
-sp {apply*doNothing
+sp {apply*moveDown
     (state <s> ^operator <o>)
-    (<o> ^name move)
+    (<o> ^name moveDown)
     (<s> ^io.output-link <output>)
     (<o> ^yValue <yVal>)
-    (<o> ^xValue <xVal>)
     (<o> ^speed <speed>)
 -->
-    (<output> ^direction nothing)
+    (<output> ^direction down)
 }
 
-
-sp {propose*MoveUp
+sp {propose*moveUp
     (state <s> ^superstate nil)
     (<s> ^io.input-link <input>)
     (<input> ^position <pos>)
-    (<pos> ^yValue <yVal> < 300)
+    (<pos> ^yValue <yVal> < 150)
     (<pos> ^speed <speed>)
 -->
     (<s> ^operator <o> + =)
-    (<o> ^name doNothing)
+    (<o> ^name moveUp)
     (<o> ^yValue <yVal>)
     (<o> ^speed <speed>)
 }
 
-sp {apply*MoveUp
+sp {apply*moveUp
     (state <s> ^operator <o>)
     (<s> ^io.output-link <output>)
-    (<o> ^name doNothing)
+    (<o> ^name moveUp)
     (<o> ^yValue <yVal>)
     (<o> ^speed <speed>)
 -->
     (<output> ^direction up)
 }
 
-
-sp {propose*MoveLeft
+sp {propose*moveLeft
     (state <s> ^superstate nil)
     (<s> ^io.input-link <input>)
     (<input> ^position <pos>)
-    (<pos> ^xValue <xVal> > 570)
+    (<pos> ^xValue <xVal> < 150)
     (<pos> ^speed <speed>)
 -->
     (<s> ^operator <o> + =)
-    (<o> ^name doNothing)
+    (<o> ^name moveLeft)
     (<o> ^xValue <xVal>)
     (<o> ^speed <speed>)
 }
 
-sp {apply*MoveLeft
+sp {apply*moveLeft
     (state <s> ^operator <o>)
     (<s> ^io.output-link <output>)
-    (<o> ^name doNothing)
+    (<o> ^name moveLeft)
     (<o> ^xValue <xVal>)
     (<o> ^speed <speed>)
 -->
     (<output> ^direction left)
 }
 
-
-sp {propose*MoveRight
+sp {propose*moveRight
     (state <s> ^superstate nil)
     (<s> ^io.input-link <input>)
     (<input> ^position <pos>)
-    (<pos> ^xValue <xVal> < 330)
+    (<pos> ^xValue <xVal> < 150)
     (<pos> ^speed <speed>)
 -->
     (<s> ^operator <o> + =)
-    (<o> ^name doNothing)
+    (<o> ^name moveRight)
     (<o> ^xValue <xVal>)
     (<o> ^speed <speed>)
 }
 
-sp {apply*MoveRight
+sp {apply*moveRight
     (state <s> ^operator <o>)
     (<s> ^io.output-link <output>)
-    (<o> ^name doNothing)
+    (<o> ^name moveRight)
     (<o> ^xValue <xVal>)
     (<o> ^speed <speed>)
 -->
     (<output> ^direction right)
 }
 
-sp {propose*MoveDown
-    (state <s> ^superstate nil)
-    (<s> ^io.input-link <input>)
-    (<input> ^position <pos>)
-    (<pos> ^yValue <yVal> > 540)
-    (<pos> ^speed <speed>)
--->
+
+
+################
+
+sp {propose*breakImpasse-down-right
+    (state <s> ^impasse tie)
+    (<s> ^item <o1>)
+    (<s> ^item <o2>)
+    (<o1> ^name moveDown)
+    (<o2> ^name moveRight)
+    
+--> 
     (<s> ^operator <o> + =)
-    (<o> ^name doNothing)
-    (<o> ^yValue <yVal>)
-    (<o> ^speed <speed>)
+    (<o> ^name breakImpasse-down-right)
+    (<o> ^name1 moveDown)
+    (<o> ^name2 moveRight)    
+} 
+
+sp {apply*breakImpasse-down-right
+    (state <s> ^operator <o>)
+    (<o> ^name breakImpasse)
+    (<o> ^name1 moveDown)
+    (<o> ^name2 moveRight)
+
+    (<s> ^superstate <ss>)
+    (<ss> ^operator <o1> +)
+    (<o1> ^name moveDown)
+    (<ss> ^operator <o2> +)
+    (<o2> ^name moveRight)
+-->
+    (<ss> ^operator <o2> !)
+    (write |'breaking impasse'|)       
 }
 
-sp {apply*MoveDown
+################
+
+sp {propose*breakImpasse-down-left
+    (state <s> ^impasse tie)
+    (<s> ^item <o1>)
+    (<s> ^item <o2>)
+    (<o1> ^name moveDown)
+    (<o2> ^name moveLeft)
+    
+--> 
+    (<s> ^operator <o> + =)
+    (<o> ^name breakImpasse-down-left)
+    (<o> ^name1 moveDown)
+    (<o> ^name2 moveLeft)    
+} 
+
+sp {apply*breakImpasse-down-left
     (state <s> ^operator <o>)
-    (<s> ^io.output-link <output>)
-    (<o> ^name doNothing)
-    (<o> ^yValue <yVal>)
-    (<o> ^speed <speed>)
+    (<o> ^name breakImpasse-down-left)
+    (<o> ^name1 moveDown)
+    (<o> ^name2 moveLeft)
+
+    (<s> ^superstate <ss>)
+    (<ss> ^operator <o1> +)
+    (<o1> ^name moveDown)
+    (<ss> ^operator <o2> +)
+    (<o2> ^name moveLeft)
 -->
-    (<output> ^direction down)
+    (<ss> ^operator <o2> !)
+    (write |'breaking impasse'|)       
+}
+
+################
+
+sp {propose*breakImpasse-up-right
+    (state <s> ^impasse tie)
+    (<s> ^item <o1>)
+    (<s> ^item <o2>)
+    (<o1> ^name moveRight)
+    (<o2> ^name moveUp)
+    
+--> 
+    (<s> ^operator <o> + =)
+    (<o> ^name breakImpasse-up-right)
+    (<o> ^name1 moveRight)
+    (<o> ^name2 moveUp)    
+} 
+
+sp {apply*breakImpasse-up-right
+    (state <s> ^operator <o>)
+    (<o> ^name breakImpasse-up-right)
+    (<o> ^name1 moveRight)
+    (<o> ^name2 moveUp)
+
+    (<s> ^superstate <ss>)
+    (<ss> ^operator <o1> +)
+    (<o1> ^name moveRight)
+    (<ss> ^operator <o2> +)
+    (<o2> ^name moveUp)
+-->
+    (<ss> ^operator <o2> !)
+    (write |'breaking impasse'|)       
+}
+
+################
+
+sp {propose*breakImpasse-up-left
+    (state <s> ^impasse tie)
+    (<s> ^item <o1>)
+    (<s> ^item <o2>)
+    (<o1> ^name moveLeft)
+    (<o2> ^name moveUp)
+    
+--> 
+    (<s> ^operator <o> + =)
+    (<o> ^name breakImpasse-down-left)
+    (<o> ^name1 moveLeft)
+    (<o> ^name2 moveUp)    
+} 
+
+sp {apply*breakImpasse
+    (state <s> ^operator <o>)
+    (<o> ^name breakImpasse-down-left)
+    (<o> ^name1 moveLeft)
+    (<o> ^name2 moveUp)
+
+    (<s> ^superstate <ss>)
+    (<ss> ^operator <o1> +)
+    (<o1> ^name moveLeft)
+    (<ss> ^operator <o2> +)
+    (<o2> ^name moveUp)
+-->
+    (<ss> ^operator <o2> !)
+    (write |'breaking impasse'|)       
 }
