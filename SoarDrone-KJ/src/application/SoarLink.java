@@ -81,25 +81,25 @@ public class SoarLink {
 	                System.out.println("Agent says move " + move);
 
 	                // I'm not sure what child we need to give it. 
-//	                if(move.equals("up")){
-//	                	moveup = true;
-//	                }
-//
-//	                if(move.equals("left")){
-//	                	moveleft = true;
-//	                }
-//
-//	                if(move.equals("right")){
-//	                	moveright = true;
-//	                }
-//
-//	                if(move.equals("down")){
-//	                	movedown = true;
-//	                }
-//
-//	                if(move.equals("nothing")){
-//	                	movenowhere = true;
-//	                }
+	                if(move.equals("up")){
+	                	moveup = true;
+	                }
+
+	                if(move.equals("left")){
+	                	moveleft = true;
+	                }
+
+	                if(move.equals("right")){
+	                	moveright = true;
+	                }
+
+	                if(move.equals("down")){
+	                	movedown = true;
+	                }
+
+	                if(move.equals("nothing")){
+	                	movenowhere = true;
+	                }
 	                
 	                agent.ClearOutputLinkChanges();
 	            	}

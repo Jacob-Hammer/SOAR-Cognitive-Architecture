@@ -19,7 +19,7 @@ public class Main extends Application {
     public static double WIND = 0.03;
     
     private double x = 330;
-    private double y = 240;
+    private double y = 500;
     private double speedX = 1;
     private double speedY = 1;
     
@@ -59,21 +59,21 @@ public class Main extends Application {
             	if(link.moveUp()) {
             		System.out.println("Agent moves up");
             		System.out.println("----");
-            		speedY = 3;
                     speedX = 0;
+            		speedY = -3;
                     GRAVITY = -0.02;
             	} 
             	if(link.moveLeft()) {
             		System.out.println("Agent moves left");
             		System.out.println("----");
-            		speedX = -3;
+            		speedX = 3;
             		speedY = 0;
             		WIND = 0.02;
             	} 
                 if(link.moveRight()) {
                     System.out.println("Agent moves right");
                     System.out.println("----");
-                    speedX = 3;
+                    speedX = -3;
                     speedY = 0;
                     WIND = -0.02;
                     
@@ -81,8 +81,8 @@ public class Main extends Application {
                 if(link.moveDown()) {
                     System.out.println("Agent moves down");
                     System.out.println("----");
-                    speedY = -3;
                     speedX = 0;
+                    speedY = 3;
                     GRAVITY = 0.02;
                 } 
                 if(link.moveNowhere()) {

@@ -183,6 +183,7 @@ sp {propose*breakImpasse-down-right
     (<o> ^name1 moveDown)
     (<o> ^name2 moveRight)    
 } 
+
 sp {apply*breakImpasse-down-right
     (state <s> ^operator <o>)
     (<o> ^name breakImpasse-down-right)
@@ -194,7 +195,7 @@ sp {apply*breakImpasse-down-right
     (<ss> ^operator <o2> +)
     (<o2> ^name moveRight)
 -->
-    (<ss> ^operator <o2> !)
+    (<ss> ^operator <o2> > <o1>)
     (write |'breaking impasse'|)       
 }
 
@@ -226,7 +227,7 @@ sp {apply*breakImpasse-down-left
     (<ss> ^operator <o2> +)
     (<o2> ^name moveLeft)
 -->
-    (<ss> ^operator <o2> !)
+    (<ss> ^operator <o2> > <o1>)
     (write |'breaking impasse'|)       
 }
 
@@ -258,7 +259,7 @@ sp {apply*breakImpasse-up-right
     (<ss> ^operator <o2> +)
     (<o2> ^name moveUp)
 -->
-    (<ss> ^operator <o2> !)
+    (<ss> ^operator <o2> > <o1>)
     (write |'breaking impasse'|)       
 }
 
@@ -290,6 +291,6 @@ sp {apply*breakImpasse
     (<ss> ^operator <o2> +)
     (<o2> ^name moveUp)
 -->
-    (<ss> ^operator <o2> !)
+    (<ss> ^operator <o2> > <o1>)
     (write |'breaking impasse'|)       
 }
