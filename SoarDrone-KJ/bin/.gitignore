@@ -1,2 +1,5 @@
 /.DS_Store
 /javafx-sdk-16/
+
+# adding .classpath for merge issues
+*.classpath
