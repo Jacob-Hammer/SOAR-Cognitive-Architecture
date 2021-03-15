@@ -137,18 +137,30 @@ public class Main extends Application {
         Button buttonDown = new Button("Unhealthy 4");
         Button buttonCenter = new Button("Healthy!");
 
-        // Set button locations
+        // Set button sizes and locations
+        buttonStep.setMaxSize(100,30);
+        buttonStep.setMinSize(100,30);
+        buttonUp.setMaxSize(100,30);
+        buttonUp.setMinSize(100,30);
+        buttonLeft.setMaxSize(100,30);
+        buttonLeft.setMinSize(100,30);
+        buttonRight.setMaxSize(100,30);
+        buttonRight.setMinSize(100,30);
+        buttonDown.setMaxSize(100,30);
+        buttonDown.setMinSize(100,30);
+        buttonCenter.setMaxSize(100,30);
+        buttonCenter.setMinSize(100,30);
         buttonStep.setTranslateX(0);
         buttonStep.setTranslateY(0);
-        buttonUp.setTranslateX(135);
+        buttonUp.setTranslateX(100);
         buttonUp.setTranslateY(0);
-        buttonLeft.setTranslateX(270);
+        buttonLeft.setTranslateX(200);
         buttonLeft.setTranslateY(0);
-        buttonRight.setTranslateX(305);
+        buttonRight.setTranslateX(300);
         buttonRight.setTranslateY(0);
-        buttonDown.setTranslateX(540);
+        buttonDown.setTranslateX(400);
         buttonDown.setTranslateY(0);
-        buttonCenter.setTranslateX(675);
+        buttonCenter.setTranslateX(500);
         buttonCenter.setTranslateY(0);
 
         buttonStep.setOnAction(actionEvent ->  {
