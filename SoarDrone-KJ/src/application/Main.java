@@ -105,11 +105,14 @@ public class Main extends Application {
                 GraphicsContext gc = canvas.getGraphicsContext2D();
                 gc.setFill(Color.WHITE);
                 gc.fillRect(0, 0, W, H);
-                gc.strokeLine(300, 300, 300, 540); // center box y top
-                gc.strokeLine(540, 300, 540, 540); // center box y bottom
-                gc.strokeLine(300, 300, 540, 300); // center box x top
-                gc.strokeLine(300, 540, 540, 540); // center box x bottom
+                gc.strokeLine(330, 330, 330, 570); // center box y top
+                gc.strokeLine(570, 330, 570, 570); // center box y bottom
+                gc.strokeLine(330, 330, 570, 330); // center box x top
+                gc.strokeLine(330, 570, 570, 570); // center box x bottom
                 gc.setFill(Color.ORANGE);
+                if (x < 560 && y < 560 && x > 320 && y > 320) {
+                	gc.setFill(Color.GREEN);
+                }
                 gc.fillRect(
                     x,
                     y,
@@ -131,10 +134,14 @@ public class Main extends Application {
         
         // Create buttons
         Button buttonStep = new Button("Step");
-        Button buttonUp = new Button("Unhealthy 1");
-        Button buttonLeft = new Button("Unhealthy 2");
-        Button buttonRight = new Button("Unhealthy 3");
-        Button buttonDown = new Button("Unhealthy 4");
+        Button buttonUp = new Button("Place Q1");
+        Button buttonLeft = new Button("Place Q2");
+        Button buttonRight = new Button("Place Q3");
+        Button buttonDown = new Button("Place Q4");
+        Button buttonMoveUp = new Button("Move Up");
+        Button buttonMoveLeft = new Button("Move Left");
+        Button buttonMoveRight = new Button("Move Right");
+        Button buttonMoveDown = new Button("Move Down");
         Button buttonCenter = new Button("Healthy!");
 
         // Set button sizes and locations
@@ -148,6 +155,14 @@ public class Main extends Application {
         buttonRight.setMinSize(100,30);
         buttonDown.setMaxSize(100,30);
         buttonDown.setMinSize(100,30);
+        buttonMoveUp.setMaxSize(100,30);
+        buttonMoveUp.setMinSize(100,30);
+        buttonMoveLeft.setMaxSize(100,30);
+        buttonMoveLeft.setMinSize(100,30);
+        buttonMoveRight.setMaxSize(100,30);
+        buttonMoveRight.setMinSize(100,30);
+        buttonMoveDown.setMaxSize(100,30);
+        buttonMoveDown.setMinSize(100,30);
         buttonCenter.setMaxSize(100,30);
         buttonCenter.setMinSize(100,30);
         buttonStep.setTranslateX(0);
@@ -160,8 +175,16 @@ public class Main extends Application {
         buttonRight.setTranslateY(0);
         buttonDown.setTranslateX(400);
         buttonDown.setTranslateY(0);
-        buttonCenter.setTranslateX(500);
-        buttonCenter.setTranslateY(0);
+        buttonMoveUp.setTranslateX(500);
+        buttonMoveUp.setTranslateY(0);
+        buttonMoveLeft.setTranslateX(600);
+        buttonMoveLeft.setTranslateY(0);
+        buttonMoveRight.setTranslateX(700);
+        buttonMoveRight.setTranslateY(0);
+        buttonMoveDown.setTranslateX(800);
+        buttonMoveDown.setTranslateY(0);
+        buttonCenter.setTranslateX(0);
+        buttonCenter.setTranslateY(30);
 
         buttonStep.setOnAction(actionEvent ->  {
         	step = false;
@@ -169,40 +192,63 @@ public class Main extends Application {
         });
 
         buttonUp.setOnAction(actionEvent ->  {
-            y = 810;
-//        	speedY = -30;
-//        	speedY += 3;
+        	x = 600;
+            y = 300;
         });
 
         buttonLeft.setOnAction(actionEvent ->  {
-            x = 90;
-//            speedX = -30;
-//            speedX += -3;
+        	x = 300;
+            y = 300;
         });
 
         buttonRight.setOnAction(actionEvent ->  {
-            x = 810;
-//            speedX = 30;
-//            speedX += 3;
+        	x = 300;
+            y = 600;
         });
 
         buttonDown.setOnAction(actionEvent ->  {
-            y = 90;
-//            speedY = 30;
-//            speedY += -3;
+        	x = 600;
+            y = 600;
         });
+        
+        buttonMoveUp.setOnAction(actionEvent ->  {
+        	GRAVITY = 1;
+        });
+
+        buttonMoveLeft.setOnAction(actionEvent ->  {
+        	WIND = 1;
+        });
+
+        buttonMoveRight.setOnAction(actionEvent ->  {
+        	WIND = 1;
+        });
+
+        buttonMoveDown.setOnAction(actionEvent ->  {
+        	GRAVITY = 1;
+        });
+        
+        buttonCenter.setOnAction(actionEvent ->  {
+          speedX = 0;
+          speedY = 0;
+          GRAVITY = 0;
+          WIND = 0;
+      });
         
         
         stage.setScene(
             new Scene(
                 new Pane(
-                    canvas,
-                    buttonStep,
-                    buttonUp,
-                    buttonLeft,
-                    buttonRight,
-                    buttonDown,
-                    buttonCenter
+                        canvas,
+                        buttonStep,
+                        buttonUp,
+                        buttonLeft,
+                        buttonRight,
+                        buttonDown,
+                        buttonMoveUp,
+                        buttonMoveLeft,
+                        buttonMoveRight,
+                        buttonMoveDown,
+                        buttonCenter
                 )
             )
         );
