@@ -186,7 +186,7 @@ sp {propose*breakImpasse-down-right
 
 sp {apply*breakImpasse-down-right
     (state <s> ^operator <o>)
-    (<o> ^name breakImpasse)
+    (<o> ^name breakImpasse-down-right)
     (<o> ^name1 moveDown)
     (<o> ^name2 moveRight)
 
@@ -275,14 +275,14 @@ sp {propose*breakImpasse-up-left
     
 --> 
     (<s> ^operator <o> + =)
-    (<o> ^name breakImpasse-down-left)
+    (<o> ^name breakImpasse-up-left)
     (<o> ^name1 moveLeft)
     (<o> ^name2 moveUp)    
 } 
 
 sp {apply*breakImpasse
     (state <s> ^operator <o>)
-    (<o> ^name breakImpasse-down-left)
+    (<o> ^name breakImpasse-up-left)
     (<o> ^name1 moveLeft)
     (<o> ^name2 moveUp)
 
