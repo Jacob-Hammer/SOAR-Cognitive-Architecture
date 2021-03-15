@@ -3,7 +3,7 @@ sp {cleanOutput*up
                ^operator <o>
                ^io.output-link <out>)
     (<out> ^direction up)
-    (<o> ^name moveDown)
+    (<o> ^name moveUp)
 -->
     (<out> ^direction up -)
 }
@@ -13,7 +13,7 @@ sp {cleanOutput*down
                ^operator <o>
                ^io.output-link <out>)
     (<out> ^direction down)
-    (<o> ^name moveUp)
+    (<o> ^name moveDown)
 -->
     (<out> ^direction down -)
 }
@@ -42,10 +42,10 @@ sp {cleanOutput*nothing
     (state <s> ^superstate nil
                ^operator <o>
                ^io.output-link <out>)
-    (<out> ^down false)
-    (<o> ^name move)
+    (<out> ^direction nowhere)
+    (<o> ^name moveNowhere)
 -->
-    (<out> ^direction nothing -)
+    (<out> ^direction nowhere -)
 }
 
 # ----------------------------------------
@@ -147,25 +147,25 @@ sp {propose*doNothing
     (state <s> ^superstate nil)
     (<s> ^io.input-link <input>)
     (<input> ^position <pos>)
-    (<pos> ^yValue <yVal> { > 540 < 300 })
+    (<pos> ^yValue <yVal> { > 300 < 540 })
     (<pos> ^xValue <xVal> { > 330 < 570 })
 #    (<pos> ^speed <speed>)
 -->
     (<s> ^operator <o> + =)
-    (<o> ^name move)
+    (<o> ^name moveNowhere)
     (<o> ^yValue <yVal>)
     (<o> ^xValue <xVal>)
 #    (<o> ^speed <speed>)
 }
 sp {apply*doNothing
     (state <s> ^operator <o>)
-    (<o> ^name move)
+    (<o> ^name moveNowhere)
     (<s> ^io.output-link <output>)
     (<o> ^yValue <yVal>)
     (<o> ^xValue <xVal>)
 #    (<o> ^speed <speed>)
 -->
-    (<output> ^direction nothing)
+    (<output> ^direction nowhere)
 }
 
 ################
