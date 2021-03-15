@@ -3,7 +3,8 @@ sp {cleanOutput*up
                ^operator <o>
                ^io.output-link <out>)
     (<out> ^direction up)
-    (<o> ^name moveDown)
+    (<o> ^name moveUp)
+#    (<o> ^name moveDown)
 -->
     (<out> ^direction up -)
 }
@@ -13,7 +14,8 @@ sp {cleanOutput*down
                ^operator <o>
                ^io.output-link <out>)
     (<out> ^direction down)
-    (<o> ^name moveUp)
+    (<o> ^name moveDown)
+#    (<o> ^name moveUp)
 -->
     (<out> ^direction down -)
 }

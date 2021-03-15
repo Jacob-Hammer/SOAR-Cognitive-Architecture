@@ -14,7 +14,7 @@ public class SoarLink {
 	
 	private Kernel kernel;
 	private Agent agent;
-	private String move = "";
+	private String move;
 	private boolean moveup;
 	private boolean moveleft;
 	private boolean moveright;

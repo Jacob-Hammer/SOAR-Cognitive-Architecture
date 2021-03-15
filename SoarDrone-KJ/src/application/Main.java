@@ -13,15 +13,15 @@ public class Main extends Application {
     public static final double W = 900;
     public static final double H = 900;
 
-    public static final double RECTW = 40;
-    public static final double RECTH = 40;
+    public static final double RECTW = 30;
+    public static final double RECTH = 30;
     public static double GRAVITY = 0.03;
     public static double WIND = 0.03;
     
     private double x = 330;
-    private double y = 500;
-    private double speedX = 1;
-    private double speedY = 1;
+    private double y = 240;
+    private double speedX;
+    private double speedY;
     
     private boolean step = false;
     
@@ -36,19 +36,18 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-            	
             	// Set boundaries of map
-            	if(y > 840) {
+            	if(y > 870) {
             		speedY = 0;
-            		y = 840;
+            		y = 870;
             	}
             	if(y < 0) {
             		speedY = 0;
             		y = 0;
             	}
-            	if(x > 840) {
+            	if(x > 870) {
             		speedX = 0;
-            		x = 840;
+            		x = 870;
             	}
             	if(x < 0) {
             		speedX = 0;
