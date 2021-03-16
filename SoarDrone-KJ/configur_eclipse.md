@@ -19,7 +19,7 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 4. If you are trying to open a pre-existing project, click on 'Import Projects from File System or Archive' under the 'File' drop down menu at the top of the screen. 
 
 5. After opening the project, click on the drop-down arrow next to the green play button and select 'Run Configurations'. 
-![image1] [SoarDrone-KJ/images/eclipse5a.png]
+![image1] [SoarDrone-KJ/images/eclise55.png]
 
 6. Click on java application, and press the 'new configuration' icon. 
 ![image1] [SoarDrone-KJ/images/eclipse6a.png]
