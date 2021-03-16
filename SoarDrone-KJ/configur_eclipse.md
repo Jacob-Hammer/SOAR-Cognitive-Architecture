@@ -7,7 +7,7 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 
 
 1. From the top menu, select 'Help', scroll down and select to 'Eclipse Marketplace...'. 
-![image1] (/SoarDrone-KJ/images/eclipse_setup1.png)
+![image1] (images/eclipse_setup1.png)
 
 
 2. In the search bar type, fx. The first to pop-up will be e(fx)clipse. Select install. Hit confirm, accept the terms, and click finish. 
