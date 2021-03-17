@@ -7,6 +7,7 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 
 
 1. From the top menu, select 'Help', scroll down and select to 'Eclipse Marketplace...'. 
+
 ![image1] (./images/eclipse_setup1.png)
 
 
@@ -19,12 +20,15 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 4. If you are trying to open a pre-existing project, click on 'Import Projects from File System or Archive' under the 'File' drop down menu at the top of the screen. 
 
 5. After opening the project, click on the drop-down arrow next to the green play button and select 'Run Configurations'. 
+
 ![image1] (./images/eclise55.png)
 
 6. Click on java application, and press the 'new configuration' icon. 
+
 ![image1] (./images/eclipse6a.png)
 
 7. Name the configuration, specify the name of the project it is supposed to run, in the Main Class type box type: application.Main, and click the boxes for include system libraries, and include inherited mains. 
+
 ![image1] (./images/eclipse7a.png)
 
 8. Now click on: (x)=Arguements. And add in the following to your VM arguements:
@@ -37,11 +41,13 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 ![image1] (./images/eclipse9a.png)
 
 10. If you are still getting errors when running the program, you will need to make sure the build path's are configured properly with the jar files. Control click on the project. 
+
 ![image1] (./images/eclipse10a.png])
 
 11. From the menu, select 'Build Path' and from the next dropdown menu select 'Configure Build Path...'
 
 12. Under libraries. You will need to add the jar files for javafx and the sml jar file. The java fx jar files, will be found in /Path/To/javafx-sdk-11.0.2/lib. (Make sure to add all of them). The sml.jar file is found in the Soar downloads files at: /PATH/TO/SOAR_Debugger/bin/java/sml.jar.  
+
 ![image1] (./images/eclipse5a.png)
 
 
