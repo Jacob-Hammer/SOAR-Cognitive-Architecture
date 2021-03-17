@@ -40,9 +40,7 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 9. Right below vm arguments. Be sure to **uncheck** the box: Use the XstartOnFirstThread arugment when launching SWT. 
 ![image1](./images/eclipse9a.png)
 
-10. If you are still getting errors when running the program, you will need to make sure the build path's are configured properly with the jar files. Control click on the project. 
-
-![image1](./images/eclipse10a.png])
+10. If you are still getting errors when running the program, you will need to make sure the build path's are configured properly with the jar files. Control click on the project under the 'Package Explorer' menu on the left.
 
 11. From the menu, select 'Build Path' and from the next dropdown menu select 'Configure Build Path...'
 
