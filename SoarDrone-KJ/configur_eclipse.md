@@ -11,15 +11,14 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 ![image1](./images/eclipse_setup1.png)
 
 
-2. In the search bar type, fx. The first to pop-up will be e(fx)clipse. Select install. Hit confirm, accept the terms, and click finish. 
+2. In the search bar type, fx. The first result will be e(fx)clipse. Select install. Hit confirm, accept the terms, and click finish. 
 
-3. While this is installing, go to this link https://gluonhq.com/products/javafx/ and download: the appropriate version of eclipse for your workstation. (For mac, I used: JavaFX Mac OS X SDK). Remember the location where you installed this. 
-
+3. While this is installing, go to this link: https://gluonhq.com/products/javafx/ and download the appropriate version of eclipse for your workstation. (For mac, I used: JavaFX Mac OS X SDK). **Remember the location where you installed this.** 
 
 
 4. If you are trying to open a pre-existing project, click on 'Import Projects from File System or Archive' under the 'File' drop down menu at the top of the screen. 
 
-5. After opening the project, click on the drop-down arrow next to the green play button and select 'Run Configurations'. 
+5. After opening the project, click on the drop-down arrow next to the green play button and select 'Run Configurations'. See picture below.
 
 ![image1](./images/eclise55.png)
 
@@ -27,7 +26,7 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 
 ![image1](./images/eclipse6a.png)
 
-7. Name the configuration, specify the name of the project it is supposed to run, in the Main Class type box type: application.Main, and click the boxes for include system libraries, and include inherited mains. 
+7. Name the configuration, specify the name of the project it is supposed to run, in the Main Class type box type: application.Main (or the location/name of your primary java file), and click the boxes for include system libraries, and include inherited mains. 
 
 ![image1](./images/eclipse7a.png)
 
@@ -37,10 +36,10 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 
 		The module-path is the path to where you saved the javafx you just downloaded. The add-modules is the path to the Soar Debugger you downloaded, and the bath to the sml.jar file that sits inside bin/java/ in the soar debugger download. 
 
-9. Right below vm arguments. Be sure to **uncheck** the box: Use the XstartOnFirstThread arugment when launching SWT. 
+9. Right below the vm arguments box, be sure to **uncheck** the box: Use the XstartOnFirstThread arugment when launching SWT. 
 ![image1](./images/eclipse9a.png)
 
-10. If you are still getting errors when running the program, you will need to make sure the build path's are configured properly with the jar files. Control click on the project under the 'Package Explorer' menu on the left.
+10. You \\\*should*\\\ be ready to run the configuration now. If you are still getting errors when running the program, you will need to make sure the build path's are configured properly with the jar files. Control click on the project under the 'Package Explorer' menu on the left.
 
 11. From the menu, select 'Build Path' and from the next dropdown menu select 'Configure Build Path...'
 
