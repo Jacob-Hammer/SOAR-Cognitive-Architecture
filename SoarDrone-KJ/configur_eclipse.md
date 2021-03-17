@@ -3,7 +3,7 @@
 
 Buckle up and keep your hands and feet inside the vehicle, its going to be a long and bumpy ride.... 
 
-1a. This tutorial assumes you have already installed the Soar debugger on your workstation. If you have not, you can find the downloads here: https://soar.eecs.umich.edu/Downloads. Remember the location where you installed this. 
+1a. This tutorial assumes you have already installed the Soar debugger on your workstation. If you have not, you can find the downloads here: https://soar.eecs.umich.edu/Downloads. I recommend the tutorial version: SoarTutorial_9.6.0-Multiplatform_64bit. **Remember** the location where you installed this. 
 
 
 1. From the top menu, select 'Help', scroll down and select to 'Eclipse Marketplace...'. 
