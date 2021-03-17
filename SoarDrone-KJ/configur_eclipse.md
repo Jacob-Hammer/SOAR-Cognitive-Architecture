@@ -44,7 +44,7 @@ Buckle up and keep your hands and feet inside the vehicle, its going to be a lon
 
 11. From the menu, select 'Build Path' and from the next dropdown menu select 'Configure Build Path...'
 
-12. Under libraries. You will need to add the jar files for javafx and the sml jar file. The java fx jar files, will be found in /Path/To/javafx-sdk-11.0.2/lib. (Make sure to add all of them). The sml.jar file is found in the Soar downloads files at: /PATH/TO/SOAR_Debugger/bin/java/sml.jar.  
+12. Under libraries. You will need to add the jar files for javafx and the sml jar file. The java fx jar files, will be found in /Path/To/javafx-sdk-11.0.2/lib. (Make sure to add all of them). The sml.jar file is found in the Soar downloads files at: /PATH/TO/SOAR_Debugger/bin/java/sml.jar. The below image shows the all the javafx jar files you need. Don't forget to add the sml.jar.
 
 ![image1](./images/eclipse5a.png)
 
