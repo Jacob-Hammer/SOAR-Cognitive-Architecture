@@ -1,0 +1,43 @@
+##!
+# @file
+#
+# @created jhammer4 20210128
+
+sp {propose*addAnimals
+    (state <s> ^type state)
+    (<s> -^animals)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name addAnimals)
+}
+ 
+sp {apply*addAnimals
+    (state <s> ^operator <o>)
+    (<o> ^name addAnimals)
+-->
+    (<s> ^animals <animals>)
+    (<animals> ^bear 85)
+    (<animals> ^giraffe 35)
+    (<animals> ^rino 45)
+    (<animals> ^lion 90)
+}
+
+sp {propose*feedAnimals
+    (state <s> ^animals <animals>)
+    (<animals> ^<anim> {<value> < 50})
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name feedAnimals)
+    (<o> ^animal <anim>)
+    (<o> ^value <value>)
+}
+sp {apply*feedAnimals
+    (state <s> ^operator <o>)
+    (<o> ^name feedAnimals)
+    (<o> ^animal <animal>)
+    (<o> ^value <val>)
+    (<s> ^animals <animals>)
+-->
+    (<animals> ^<animal> <val> -)
+    (<animals> ^<animal> (+ 100 <val>))
+}

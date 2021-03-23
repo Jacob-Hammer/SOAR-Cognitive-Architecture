@@ -1,0 +1,18 @@
+digraph g {
+   node [shape = "box" fontsize = "16"];
+   edge [];
+   graph [ rankdir = "TD" splines = "polyline"];
+   "S1" [
+      colorscheme="X11"
+      penwidth = "0"
+      label = <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+                <TR> <TD COLSPAN="3">S1</TD> </TR>
+              </TABLE>
+              >
+   ];
+
+
+"S1":s -> "B1":n [label = "Bank"]
+"S1":s -> "O2":n [label = "operator"]
+}
+

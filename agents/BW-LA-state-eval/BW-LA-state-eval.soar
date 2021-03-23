@@ -1,3 +1,0 @@
-pushd BW-LA-state-eval
-source BW-LA-state-eval_source.soar
-popd

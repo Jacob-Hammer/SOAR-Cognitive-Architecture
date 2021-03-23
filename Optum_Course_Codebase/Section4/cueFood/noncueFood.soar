@@ -1,0 +1,108 @@
+##!
+# @file
+#
+# @created jhammer4 20210205
+################################################################################
+
+##### SEMANTIC MEMORY #####
+smem --add {
+    (<main> ^food <a1> <a2> <a3>)
+    (<a1> ^type taco ^calories 200 ^mainIngredient <b1>)
+    (<a2> ^type burger ^calories 400 ^mainIngredient <b2>)
+    (<a3> ^type steak ^calories 300 ^mainIngredient <b3>)
+    (<b1> ^ingredient shell)
+    (<b2> ^ingredient patty)
+    (<b3> ^ingredient meat)
+}
+
+sp {propose*cue
+    (state <s> ^type state)
+    (<s> -^cue)
+-->
+    (<s> ^operator <o> + !)
+    (<o> ^name cue)
+}
+  
+sp {apply*cue
+    (state <s> ^operator <o>)
+    (<o> ^name cue)
+    #TODO: Smem command link, mapped to the variable <cmd>
+-->
+    (<s> ^cue true)
+    #TODO: Create a query link, use the attribute value pair type/taco to pull in the LTI as as a STI
+}
+
+sp {propose*noncue
+    (state <s> ^type state)
+    (<s> -^noncue)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name noncue)
+}
+  
+sp {apply*noncue
+    (state <s> ^operator <o>)
+    (<o> ^name noncue)
+    #TODO: Link to ^smem.command, matching the node to the variable <cmd>
+    #TODO: From the <cmd> node, link to the node connected by 'query', matching it to the variable <qy>
+    (<s> ^smem.result.retrieved.mainIngredient <lti>) #TODO: Match to the mainIngredient LTI (smem.result.retrieved.mainIngredient)
+-->
+    (<s> ^noncue true)
+    #TODO: Remove the query attribute/node
+    #TODO: Conduct a non-cue operation, using <lti> from above
+}
+
+####################
+
+##### EPISODIC MEMORY #####
+sp {propose*add
+    (state <s> ^type state)
+    (<s> -^add)
+-->
+    (<s> ^operator <o> + !)
+    (<o> ^name add)
+}
+  
+sp {apply*add
+    (state <s> ^operator <o>)
+    (<o> ^name add)
+-->
+    (<s> ^add true)
+    (<s> ^memory <mem>)
+    (<mem> ^value 50)
+}
+ 
+ 
+sp {propose*remove
+    (state <s> ^type state)
+    (<s> -^remove)
+-->
+    (<s> ^operator <o> + >)
+    (<o> ^name remove)
+}
+  
+sp {apply*remove
+    (state <s> ^operator <o>)
+    (<o> ^name remove)
+    (<s> ^memory <mem>)
+-->
+    (<s> ^memory <mem> -)
+    (<s> ^remove true)
+}
+
+sp {propose*retrieve
+    (state <s> ^type state)
+    (<s> -^retrieve)
+-->
+    (<s> ^operator <o> + =)
+    (<o> ^name retrieve)
+}
+  
+sp {apply*retrieve
+    (state <s> ^operator <o>)
+    (<o> ^name retrieve)
+    #TODO: Link to the command link, saving it to the variable <cmd>
+-->
+    #TODO: Utilizing <cmd> link, add an attribute value pair of retrieve/1 to retrieve the first episode
+    (<s> ^retrieve true)
+}

@@ -1,3 +1,0 @@
-pushd BW-Simple
-source BW-Simple_source.soar
-popd

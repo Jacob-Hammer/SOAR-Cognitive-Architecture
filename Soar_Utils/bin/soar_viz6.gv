@@ -1,0 +1,6 @@
+digraph g {
+   node [shape = "box" fontsize = "16"];
+   edge [];
+   graph [ rankdir = "TD" splines = "polyline"];
+}
+
